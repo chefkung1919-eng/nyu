@@ -15,7 +15,7 @@ const dict = {
         nav_home: "หน้าแรก",
         nav_menu: "เมนู",
         nav_track: "ติดตามออเดอร์",
-        nav_points: "แต้มสะสม",
+        nav_rewards: "สะสมแต้ม",
         nav_about: "เกี่ยวกับเรา",
         hero_title: "ศิลปะแห่งกาแฟ",
         hero_subtitle: "สัมผัสรสชาติความพรีเมียมในทุกหยด คัดสรรจากเมล็ดพันธุ์ที่ดีที่สุด สู่มือคุณ",
@@ -54,19 +54,25 @@ const dict = {
         subtotal: "ยอดรวม:",
         discount: "ส่วนลด (แลกแต้ม):",
         total_amount_pay: "ยอดสุทธิ:",
-        points_subtitle: "กรอกเบอร์โทรศัพท์ของคุณเพื่อตรวจสอบแต้มสะสมและประวัติ",
+        checkout_earn_msg: "คุณจะได้รับ",
+        points_from_order: "แต้มจากออเดอร์นี้",
+        points_subtitle: "กรอกเบอร์โทรศัพท์ของคุณเพื่อตรวจสอบแต้มสะสมและของรางวัล",
         btn_check_points: "ตรวจสอบแต้ม",
-        points_balance: "แต้มคงเหลือ",
-        points_history: "ประวัติการใช้งาน",
+        points_balance: "แต้มสะสมปัจจุบัน",
+        points_history: "ประวัติการรับ/ใช้แต้ม",
         point_earn: "ได้รับแต้ม",
-        point_redeem: "ใช้แต้ม",
-        no_history: "ยังไม่มีประวัติการใช้งาน"
+        point_redeem: "แลกแต้ม",
+        no_history: "ยังไม่มีประวัติ",
+        reward_ready: "พร้อมแลกแล้ว",
+        reward_locked: "ยังไม่ถึงเป้าหมาย",
+        reward_tier1: "ส่วนลด 50 บาท",
+        reward_tier2: "ฟรีเครื่องดื่ม 1 แก้ว"
     },
     en: {
         nav_home: "Home",
         nav_menu: "Menu",
         nav_track: "Track Order",
-        nav_points: "My Points",
+        nav_rewards: "Rewards",
         nav_about: "About Us",
         hero_title: "The Art of Coffee",
         hero_subtitle: "Experience premium taste in every drop, crafted from the finest beans.",
@@ -101,42 +107,25 @@ const dict = {
         btn_add_to_cart: "Add to Cart",
         currency: "฿",
         your_points: "Your Points:",
-        use_points_discount: "Use 100 points for 50฿ discount",
+        use_points_discount: "Use 100 pts for 50฿ discount",
         subtotal: "Subtotal:",
-        discount: "Discount (Points):",
+        discount: "Discount (Pts):",
         total_amount_pay: "Net Total:",
-        points_subtitle: "Enter your phone number to check points and history",
-        btn_check_points: "Check Points",
-        points_balance: "Points Balance",
+        checkout_earn_msg: "You will earn",
+        points_from_order: "pts from this order",
+        points_subtitle: "Enter your phone number to check rewards",
+        btn_check_points: "Check Rewards",
+        points_balance: "Current Points",
         points_history: "Transaction History",
         point_earn: "Earned",
         point_redeem: "Redeemed",
-        no_history: "No transaction history yet"
+        no_history: "No history yet",
+        reward_ready: "Available",
+        reward_locked: "Locked",
+        reward_tier1: "50฿ Discount",
+        reward_tier2: "1 Free Drink"
     }
 };
-
-// === DUMMY DATA FALLBACK ===
-const dummyCategories = [
-    { id: 1, name_th: "กาแฟร้อน", name_en: "Hot Coffee", slug: "hot-coffee" },
-    { id: 2, name_th: "กาแฟเย็น", name_en: "Iced Coffee", slug: "iced-coffee" },
-    { id: 3, name_th: "เครื่องดื่มพิเศษ", name_en: "Special Drinks", slug: "special-drinks" },
-    { id: 4, name_th: "เบเกอรี่", name_en: "Bakery", slug: "bakery" }
-];
-const dummyProducts = [
-    { id: 1, category_id: 1, name_th: "ลูมิแยร์ เอสเพรสโซ่", name_en: "Lumière Espresso", price: 90, image_url: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&q=80&w=800", is_featured: false },
-    { id: 2, category_id: 1, name_th: "ฮอท คาปูชิโน่", name_en: "Hot Cappuccino", price: 110, image_url: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&q=80&w=800", is_featured: true },
-    { id: 3, category_id: 2, name_th: "อเมริกาโน่เย็น", name_en: "Iced Americano", price: 100, image_url: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=800", is_featured: true },
-    { id: 4, category_id: 2, name_th: "ลาเต้เย็น", name_en: "Iced Latte", price: 120, image_url: "https://images.unsplash.com/photo-1461023058943-07cb1ce8912d?auto=format&fit=crop&q=80&w=800", is_featured: false },
-    { id: 5, category_id: 2, name_th: "มอคค่าเย็น", name_en: "Iced Mocha", price: 130, image_url: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&q=80&w=800", is_featured: false },
-    { id: 6, category_id: 3, name_th: "เดอร์ตี้ คอฟฟี่", name_en: "Dirty Coffee", price: 140, image_url: "https://images.unsplash.com/photo-1599395714085-714041b6ecbc?auto=format&fit=crop&q=80&w=800", is_featured: true },
-    { id: 7, category_id: 3, name_th: "มัทฉะลาเต้", name_en: "Matcha Latte", price: 135, image_url: "https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&q=80&w=800", is_featured: false },
-    { id: 8, category_id: 3, name_th: "ยูซุ โคลด์บรูว์", name_en: "Yuzu Cold Brew", price: 150, image_url: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800", is_featured: true },
-    { id: 9, category_id: 4, name_th: "ครัวซองต์เนยสด", name_en: "Butter Croissant", price: 85, image_url: "https://images.unsplash.com/photo-1555507036-ab1f40ce88ca?auto=format&fit=crop&q=80&w=800", is_featured: false },
-    { id: 10, category_id: 4, name_th: "ชีสเค้กหน้าไหม้", name_en: "Basque Cheesecake", price: 160, image_url: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&q=80&w=800", is_featured: true }
-];
-
-// In-memory dummy DB for points (if Supabase not connected)
-const dummyCustomers = {}; // phone -> { name, total_points, history: [] }
 
 // === APPLICATION STATE ===
 const app = {
@@ -194,35 +183,40 @@ const app = {
 
     async fetchData() {
         try {
-            if (supabase) {
-                const [cats, prods] = await Promise.all([
-                    supabase.from('categories').select('*').order('sort_order'),
-                    supabase.from('products').select('*').eq('is_available', true).order('id')
-                ]);
-                this.categories = cats.data || dummyCategories;
-                this.products = prods.data || dummyProducts;
-            } else {
-                this.categories = dummyCategories;
-                this.products = dummyProducts;
+            if (!supabase) {
+                console.warn("Supabase not connected. Please add your URL and Key.");
+                document.getElementById('menu-grid').innerHTML = '<div class="col-span-full text-center py-20 text-red-400">Database not connected. Please check configuration.</div>';
+                document.getElementById('featured-menu-grid').innerHTML = '<div class="col-span-full text-center py-10 text-red-400">Database not connected.</div>';
+                return;
             }
+
+            const [cats, prods] = await Promise.all([
+                supabase.from('categories').select('*').order('sort_order'),
+                supabase.from('products').select('*').eq('is_available', true).order('id')
+            ]);
+            
+            this.categories = cats.data || [];
+            this.products = prods.data || [];
+            
             this.renderMenu();
             this.renderFeatured();
         } catch (e) {
             console.error("Error fetching data:", e);
-            this.categories = dummyCategories;
-            this.products = dummyProducts;
-            this.renderMenu();
-            this.renderFeatured();
+            document.getElementById('menu-grid').innerHTML = '<div class="col-span-full text-center py-20 text-red-400">Failed to load menu.</div>';
+            document.getElementById('featured-menu-grid').innerHTML = '<div class="col-span-full text-center py-10 text-red-400">Failed to load menu.</div>';
         }
     },
 
     renderFeatured() {
-        const featured = this.products.filter(p => p.is_featured).slice(0, 3);
+        if(this.products.length === 0) return;
+        const featured = this.products.filter(p => p.is_featured).slice(0, 6);
         const container = document.getElementById('featured-menu-grid');
         container.innerHTML = featured.map(p => this.createProductCard(p)).join('');
     },
 
     renderMenu(categoryId = null) {
+        if(this.categories.length === 0 || this.products.length === 0) return;
+        
         const filterContainer = document.getElementById('categories-filter');
         let catsHtml = `<button onclick="app.renderMenu(null)" class="px-6 py-2 rounded-full border border-brand-gold ${categoryId === null ? 'bg-brand-gold text-brand-dark' : 'text-brand-gold hover:bg-brand-gold/10'} transition-colors">${this.lang === 'th' ? 'ทั้งหมด' : 'All'}</button>`;
         catsHtml += this.categories.map(c => `
@@ -242,12 +236,14 @@ const app = {
             <div class="h-48 overflow-hidden bg-brand-dark">
                 <img src="${p.image_url}" alt="${name}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity">
             </div>
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="font-serif text-xl text-brand-gold">${name}</h3>
-                    <span class="text-brand-cream font-medium">฿${p.price}</span>
+            <div class="p-6 flex flex-col justify-between h-40">
+                <div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-serif text-xl text-brand-gold line-clamp-2">${name}</h3>
+                        <span class="text-brand-cream font-medium whitespace-nowrap ml-2">฿${p.price}</span>
+                    </div>
                 </div>
-                <button class="w-full border border-brand-gold text-brand-gold py-2 rounded-sm hover:bg-brand-gold hover:text-brand-dark transition-colors text-sm font-semibold">${dict[this.lang].btn_add_to_cart}</button>
+                <button class="w-full border border-brand-gold text-brand-gold py-2 rounded-sm hover:bg-brand-gold hover:text-brand-dark transition-colors text-sm font-semibold mt-auto">${dict[this.lang].btn_add_to_cart}</button>
             </div>
         </div>`;
     },
@@ -264,14 +260,14 @@ const app = {
             <h2 class="text-3xl font-serif text-brand-gold mb-2">${name}</h2>
             <p class="text-brand-cream/70 mb-6">${desc || ''}</p>
             <div class="flex justify-between items-center mb-8">
-                <span class="text-2xl">฿${p.price}</span>
+                <span class="text-2xl font-bold">฿${p.price}</span>
                 <div class="flex items-center space-x-4 border border-brand-gold/30 rounded-sm px-4 py-2">
                     <button onclick="app.updateModalQty(-1)" class="text-brand-gold text-xl hover:text-brand-cream">-</button>
                     <span id="modal-qty" class="w-8 text-center text-lg">1</span>
                     <button onclick="app.updateModalQty(1)" class="text-brand-gold text-xl hover:text-brand-cream">+</button>
                 </div>
             </div>
-            <button onclick="app.addToCart(${p.id})" class="w-full bg-brand-gold text-brand-dark py-4 rounded-sm font-bold text-lg hover:bg-brand-goldHover transition-colors">${dict[this.lang].btn_add_to_cart}</button>
+            <button onclick="app.addToCart(${p.id})" class="w-full bg-brand-gold text-brand-dark py-4 rounded-sm font-bold text-lg hover:bg-brand-goldHover transition-colors shadow-lg">${dict[this.lang].btn_add_to_cart}</button>
         `;
         document.getElementById('product-modal').classList.remove('hidden');
     },
@@ -326,6 +322,7 @@ const app = {
     saveCart() {
         localStorage.setItem('lumiere_cart', JSON.stringify(this.cart));
         this.updateCartUI();
+        if(this.currentView === 'checkout') this.updateCheckoutSummary();
     },
 
     updateCartUI() {
@@ -351,19 +348,19 @@ const app = {
             const subtotal = item.price * item.quantity;
             total += subtotal;
             return `
-            <div class="flex items-center justify-between py-4 border-b border-brand-gold/10 last:border-0">
-                <div class="flex items-center space-x-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between py-4 border-b border-brand-gold/10 last:border-0 gap-4">
+                <div class="flex items-center space-x-4 w-full sm:w-auto">
                     <img src="${item.image_url}" class="w-16 h-16 object-cover rounded-sm border border-brand-gold/20">
                     <div>
                         <h4 class="font-serif text-lg text-brand-gold">${name}</h4>
                         <p class="text-brand-cream/70">฿${item.price}</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-6 w-full sm:w-auto justify-between sm:justify-end">
                     <div class="flex items-center space-x-3 bg-brand-dark px-3 py-1 rounded-sm border border-brand-gold/30">
-                        <button onclick="app.updateCartQty(${index}, -1)" class="text-brand-gold hover:text-brand-cream">-</button>
+                        <button onclick="app.updateCartQty(${index}, -1)" class="text-brand-gold hover:text-brand-cream px-2 py-1">-</button>
                         <span class="w-6 text-center">${item.quantity}</span>
-                        <button onclick="app.updateCartQty(${index}, 1)" class="text-brand-gold hover:text-brand-cream">+</button>
+                        <button onclick="app.updateCartQty(${index}, 1)" class="text-brand-gold hover:text-brand-cream px-2 py-1">+</button>
                     </div>
                     <span class="font-medium text-lg min-w-[60px] text-right">฿${subtotal}</span>
                 </div>
@@ -389,7 +386,10 @@ const app = {
         if (this.usePointsDiscount && this.currentCustomerPoints >= 100) {
             discount = 50;
         }
-        const total = subtotal - discount;
+        const total = Math.max(0, subtotal - discount);
+        
+        // Calculate points earned (25 THB = 1 Pt)
+        const earned = Math.floor(total / 25);
 
         document.getElementById('summary-subtotal').innerText = `฿${subtotal}`;
         const discountRow = document.getElementById('summary-discount-row');
@@ -399,7 +399,8 @@ const app = {
         } else {
             discountRow.classList.add('hidden');
         }
-        document.getElementById('summary-total').innerText = `฿${Math.max(0, total)}`;
+        document.getElementById('summary-total').innerText = `฿${total}`;
+        document.getElementById('summary-earn-points').innerText = earned;
     },
 
     debounceCheckPoints() {
@@ -425,16 +426,10 @@ const app = {
             let cId = null;
 
             if (supabase) {
-                const { data } = await supabase.from('customers').select('id, total_points').eq('phone', phone).single();
-                if (data) {
-                    pts = data.total_points;
+                const { data, error } = await supabase.from('customers').select('id, points_balance').eq('phone', phone).single();
+                if (data && !error) {
+                    pts = data.points_balance;
                     cId = data.id;
-                }
-            } else {
-                // Dummy logic
-                if (dummyCustomers[phone]) {
-                    pts = dummyCustomers[phone].total_points;
-                    cId = 'dummy-id';
                 }
             }
 
@@ -485,6 +480,10 @@ const app = {
 
     async submitOrder() {
         if(this.cart.length === 0) return;
+        if(!supabase) {
+            alert("Database connection required to submit orders.");
+            return;
+        }
 
         const name = document.getElementById('checkout-name').value;
         const phone = document.getElementById('checkout-phone').value;
@@ -496,7 +495,6 @@ const app = {
         const discountAmount = pointsRedeemed > 0 ? 50 : 0;
         const finalPrice = Math.max(0, subtotal - discountAmount);
         
-        // 25 THB = 1 Point (calculated from final price)
         const pointsEarned = Math.floor(finalPrice / 25);
         
         let address = null;
@@ -514,84 +512,71 @@ const app = {
         btn.disabled = true;
 
         try {
-            if (supabase) {
-                // 1. Get or Create Customer
-                let activeCustomerId = this.customerId;
-                if (!activeCustomerId) {
-                    const { data: newCust, error: errCust } = await supabase.from('customers').insert([{ phone, name, total_points: 0 }]).select().single();
-                    if(errCust) throw errCust;
-                    activeCustomerId = newCust.id;
-                }
+            // 1. Get or Create Customer
+            let activeCustomerId = this.customerId;
+            let currentDbPoints = 0;
 
-                // 2. Insert Order
-                const { data: orderData, error: orderErr } = await supabase.from('orders').insert([{
-                    order_number,
-                    customer_id: activeCustomerId,
-                    customer_name: name,
-                    customer_phone: phone,
-                    fulfillment_type: fulfillment,
-                    delivery_address: address,
-                    pickup_time: pickup_time,
-                    total_price: finalPrice,
-                    discount_amount: discountAmount,
-                    points_earned: pointsEarned,
-                    points_redeemed: pointsRedeemed,
-                    note
-                }]).select().single();
-                if (orderErr) throw orderErr;
-
-                // 3. Insert Items
-                const orderItems = this.cart.map(item => ({
-                    order_id: orderData.id,
-                    product_id: item.product_id,
-                    product_name_snapshot: this.lang === 'th' ? item.name_th : item.name_en,
-                    quantity: item.quantity,
-                    unit_price: item.price,
-                    subtotal: item.price * item.quantity
-                }));
-                await supabase.from('order_items').insert(orderItems);
-
-                // 4. Update Points & Log Transactions
-                if (pointsRedeemed > 0) {
-                    await supabase.from('point_transactions').insert([{
-                        customer_id: activeCustomerId, order_id: orderData.id, points_change: -pointsRedeemed, type: 'redeem'
-                    }]);
-                    // Subtract points (Using raw update for simplicity in client side, assumes RLS allows)
-                    const {data: cData} = await supabase.from('customers').select('total_points').eq('id', activeCustomerId).single();
-                    await supabase.from('customers').update({total_points: cData.total_points - pointsRedeemed}).eq('id', activeCustomerId);
-                }
-                if (pointsEarned > 0) {
-                    await supabase.from('point_transactions').insert([{
-                        customer_id: activeCustomerId, order_id: orderData.id, points_change: pointsEarned, type: 'earn'
-                    }]);
-                    const {data: cData} = await supabase.from('customers').select('total_points').eq('id', activeCustomerId).single();
-                    await supabase.from('customers').update({total_points: cData.total_points + pointsEarned}).eq('id', activeCustomerId);
-                }
-
+            if (!activeCustomerId) {
+                const { data: newCust, error: errCust } = await supabase.from('customers').insert([{ phone, name, points_balance: 0 }]).select().single();
+                if(errCust) throw errCust;
+                activeCustomerId = newCust.id;
             } else {
-                // Dummy Data Logic
-                if (!dummyCustomers[phone]) {
-                    dummyCustomers[phone] = { name, total_points: 0, history: [] };
-                }
-                const c = dummyCustomers[phone];
-                if (pointsRedeemed > 0) {
-                    c.total_points -= pointsRedeemed;
-                    c.history.unshift({ type: 'redeem', points: -pointsRedeemed, date: new Date() });
-                }
-                if (pointsEarned > 0) {
-                    c.total_points += pointsEarned;
-                    c.history.unshift({ type: 'earn', points: pointsEarned, date: new Date() });
-                }
+                const { data: cData } = await supabase.from('customers').select('points_balance').eq('id', activeCustomerId).single();
+                if(cData) currentDbPoints = cData.points_balance;
             }
+
+            // 2. Insert Order
+            const { data: orderData, error: orderErr } = await supabase.from('orders').insert([{
+                order_number,
+                customer_id: activeCustomerId,
+                customer_name: name,
+                customer_phone: phone,
+                fulfillment_type: fulfillment,
+                delivery_address: address,
+                pickup_time: pickup_time,
+                total_price: finalPrice,
+                discount_amount: discountAmount,
+                points_earned: pointsEarned,
+                points_redeemed: pointsRedeemed,
+                note
+            }]).select().single();
+            if (orderErr) throw orderErr;
+
+            // 3. Insert Items
+            const orderItems = this.cart.map(item => ({
+                order_id: orderData.id,
+                product_id: item.product_id,
+                product_name_snapshot: this.lang === 'th' ? item.name_th : item.name_en,
+                quantity: item.quantity,
+                unit_price: item.price,
+                subtotal: item.price * item.quantity
+            }));
+            await supabase.from('order_items').insert(orderItems);
+
+            // 4. Log Transactions & Update Points
+            const newBalance = currentDbPoints - pointsRedeemed + pointsEarned;
             
-            // Success
+            if (pointsRedeemed > 0) {
+                await supabase.from('point_transactions').insert([{
+                    customer_id: activeCustomerId, order_id: orderData.id, points_change: -pointsRedeemed, type: 'redeem'
+                }]);
+            }
+            if (pointsEarned > 0) {
+                await supabase.from('point_transactions').insert([{
+                    customer_id: activeCustomerId, order_id: orderData.id, points_change: pointsEarned, type: 'earn'
+                }]);
+            }
+            // Update final points balance
+            await supabase.from('customers').update({points_balance: newBalance}).eq('id', activeCustomerId);
+            
+            // Success Flow
             setTimeout(() => {
                 this.cart = [];
                 this.saveCart();
                 
                 const langTxt = this.lang === 'th' ? 
-                    `สั่งซื้อสำเร็จ!\nหมายเลขออเดอร์ของคุณคือ ${order_number}\n\nคุณได้รับแต้มสะสมจากออเดอร์นี้ ${pointsEarned} แต้ม!` : 
-                    `Success!\nYour order number is ${order_number}\n\nYou earned ${pointsEarned} points from this order!`;
+                    `สั่งซื้อสำเร็จ!\nหมายเลขออเดอร์ของคุณคือ ${order_number}\n\nคุณได้รับ ${pointsEarned} แต้มจากออเดอร์นี้!` : 
+                    `Success!\nYour order number is ${order_number}\n\nYou earned ${pointsEarned} points!`;
                 alert(langTxt);
 
                 this.navigate('track');
@@ -604,12 +589,13 @@ const app = {
 
         } catch (e) {
             console.error("Order submission failed:", e);
-            alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+            alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง / Failed to process order.");
             btn.innerText = dict[this.lang].btn_confirm_order;
             btn.disabled = false;
         }
     },
 
+    // --- TRACK ORDER ---
     async trackOrder() {
         const orderNum = document.getElementById('track-order-number').value.trim();
         const resDiv = document.getElementById('track-result');
@@ -619,21 +605,18 @@ const app = {
         resDiv.innerHTML = `<div class="spinner mx-auto my-4"></div>`;
 
         try {
-            let order = null;
-            if (supabase) {
-                const { data } = await supabase.from('orders').select('*').eq('order_number', orderNum).single();
-                if (data) order = data;
-            } else {
-                order = { order_number: orderNum, status: 'preparing', customer_name: 'Customer', total_price: 380 };
-            }
-
-            if (order) {
+            if (!supabase) throw new Error("No DB");
+            
+            const { data: order, error } = await supabase.from('orders').select('*').eq('order_number', orderNum).single();
+            
+            if (order && !error) {
                 const statusKey = `status_${order.status}`;
                 const statusText = dict[this.lang][statusKey] || order.status;
                 
                 let statusColor = 'text-brand-cream';
-                if(order.status === 'ready') statusColor = 'text-green-400';
+                if(order.status === 'ready' || order.status === 'completed') statusColor = 'text-green-400';
                 if(order.status === 'preparing') statusColor = 'text-brand-gold';
+                if(order.status === 'cancelled') statusColor = 'text-red-400';
                 
                 resDiv.innerHTML = `
                     <div class="flex justify-between items-start border-b border-brand-gold/20 pb-4 mb-4">
@@ -643,30 +626,29 @@ const app = {
                         </div>
                         <div class="text-right">
                             <p class="text-sm text-brand-cream/70 mb-1">Status</p>
-                            <span class="px-4 py-1 rounded-full border border-brand-gold/30 bg-brand-dark ${statusColor} font-bold">${statusText}</span>
+                            <span class="px-4 py-1 rounded-full border border-brand-gold/30 bg-brand-dark ${statusColor} font-bold tracking-wide">${statusText}</span>
                         </div>
                     </div>
-                    <p>Name: <span class="text-brand-gold">${order.customer_name}</span></p>
+                    <p class="mb-2">Name: <span class="text-brand-gold">${order.customer_name}</span></p>
                     <p>Total: <span class="text-brand-gold">฿${order.total_price}</span></p>
                 `;
 
-                if (supabase) {
-                    supabase.channel('custom-all-channel')
-                    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders', filter: `id=eq.${order.id}` }, payload => {
-                        this.trackOrder();
-                    }).subscribe();
-                }
+                // Real-time subscription (only subscribe once per order)
+                supabase.channel(`room_${order.id}`)
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders', filter: `id=eq.${order.id}` }, payload => {
+                    this.trackOrder();
+                }).subscribe();
 
             } else {
-                resDiv.innerHTML = `<p class="text-red-400">ไม่พบหมายเลขออเดอร์นี้ / Order not found</p>`;
+                resDiv.innerHTML = `<p class="text-red-400 text-center py-4">ไม่พบหมายเลขออเดอร์นี้ / Order not found</p>`;
             }
         } catch (e) {
-            resDiv.innerHTML = `<p class="text-red-400">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</p>`;
+            resDiv.innerHTML = `<p class="text-red-400 text-center py-4">เกิดข้อผิดพลาดในการดึงข้อมูล</p>`;
         }
     },
 
-    // --- MY POINTS VIEW ---
-    async checkMyPoints() {
+    // --- REWARDS VIEW ---
+    async checkMyRewards() {
         const phone = document.getElementById('points-phone').value.trim();
         const resDiv = document.getElementById('points-result');
         if (!phone) return;
@@ -675,34 +657,18 @@ const app = {
         resDiv.innerHTML = `<div class="spinner mx-auto my-4"></div>`;
 
         try {
-            let pts = 0;
-            let history = [];
-            let name = "";
+            if(!supabase) throw new Error("No DB");
 
-            if (supabase) {
-                const { data: cData } = await supabase.from('customers').select('id, name, total_points').eq('phone', phone).single();
-                if (cData) {
-                    pts = cData.total_points;
-                    name = cData.name;
-                    const { data: txData } = await supabase.from('point_transactions').select('*').eq('customer_id', cData.id).order('created_at', { ascending: false });
-                    if(txData) history = txData;
-                } else {
-                    throw new Error("Not found");
-                }
-            } else {
-                if (dummyCustomers[phone]) {
-                    pts = dummyCustomers[phone].total_points;
-                    name = dummyCustomers[phone].name;
-                    history = dummyCustomers[phone].history.map(h => ({
-                        type: h.type,
-                        points_change: h.points,
-                        created_at: h.date.toISOString()
-                    }));
-                } else {
-                    throw new Error("Not found");
-                }
-            }
+            const { data: cData, error: cErr } = await supabase.from('customers').select('id, name, points_balance').eq('phone', phone).single();
+            if (cErr || !cData) throw new Error("Not found");
 
+            const pts = cData.points_balance;
+            const name = cData.name;
+            
+            const { data: txData } = await supabase.from('point_transactions').select('*').eq('customer_id', cData.id).order('created_at', { ascending: false }).limit(10);
+            const history = txData || [];
+
+            // History rendering
             let historyHtml = history.length > 0 ? history.map(tx => {
                 const isEarn = tx.type === 'earn';
                 const sign = isEarn ? '+' : '';
@@ -720,12 +686,42 @@ const app = {
                 `;
             }).join('') : `<p class="text-center text-brand-cream/50 py-4">${dict[this.lang].no_history}</p>`;
 
+            // Progress bar logic
+            const maxPoints = 200;
+            const percentage = Math.min((pts / maxPoints) * 100, 100);
+            const t1Ready = pts >= 100;
+            const t2Ready = pts >= 200;
+
             resDiv.innerHTML = `
-                <div class="text-center mb-8 pb-8 border-b border-brand-gold/20">
+                <div class="text-center mb-10">
                     <h2 class="text-2xl font-serif text-brand-gold mb-2">${name}</h2>
                     <p class="text-brand-cream/70 mb-4">${dict[this.lang].points_balance}</p>
-                    <div class="text-6xl font-bold text-brand-cream">${pts}</div>
+                    <div class="text-6xl font-bold text-brand-cream tracking-tight">${pts}</div>
                 </div>
+                
+                <!-- Progress Bar -->
+                <div class="mb-12 bg-brand-dark p-6 rounded-sm border border-brand-gold/20 shadow-inner">
+                    <div class="relative w-full h-3 bg-brand-brown rounded-full mb-6 overflow-hidden border border-brand-gold/10">
+                        <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-brand-gold/50 to-brand-gold transition-all duration-1000 ease-out rounded-full" style="width: ${percentage}%;"></div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between gap-4 mt-4">
+                        <!-- Tier 1 -->
+                        <div class="flex-1 p-4 rounded-sm border ${t1Ready ? 'border-brand-gold bg-brand-gold/10' : 'border-brand-gold/20 bg-brand-brown'} text-center transition-colors">
+                            <div class="text-xl font-bold ${t1Ready ? 'text-brand-gold' : 'text-brand-cream/50'} mb-1">100 Pts</div>
+                            <div class="text-sm text-brand-cream mb-3">${dict[this.lang].reward_tier1}</div>
+                            <span class="text-xs px-3 py-1 rounded-full ${t1Ready ? 'bg-brand-gold text-brand-dark font-bold' : 'bg-brand-dark text-brand-cream/50 border border-brand-gold/20'}">${t1Ready ? dict[this.lang].reward_ready : dict[this.lang].reward_locked}</span>
+                        </div>
+                        
+                        <!-- Tier 2 -->
+                        <div class="flex-1 p-4 rounded-sm border ${t2Ready ? 'border-brand-gold bg-brand-gold/10' : 'border-brand-gold/20 bg-brand-brown'} text-center transition-colors">
+                            <div class="text-xl font-bold ${t2Ready ? 'text-brand-gold' : 'text-brand-cream/50'} mb-1">200 Pts</div>
+                            <div class="text-sm text-brand-cream mb-3">${dict[this.lang].reward_tier2}</div>
+                            <span class="text-xs px-3 py-1 rounded-full ${t2Ready ? 'bg-brand-gold text-brand-dark font-bold' : 'bg-brand-dark text-brand-cream/50 border border-brand-gold/20'}">${t2Ready ? dict[this.lang].reward_ready : dict[this.lang].reward_locked}</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div>
                     <h3 class="text-lg font-serif text-brand-gold mb-4">${dict[this.lang].points_history}</h3>
                     <div class="bg-brand-dark rounded-sm p-4 border border-brand-gold/10 max-h-64 overflow-y-auto">
@@ -735,7 +731,7 @@ const app = {
             `;
 
         } catch (e) {
-            resDiv.innerHTML = `<p class="text-brand-cream/70 text-center py-4">ไม่พบข้อมูลเบอร์โทรศัพท์นี้ / No record found</p>`;
+            resDiv.innerHTML = `<p class="text-brand-cream/70 text-center py-4">ไม่พบข้อมูลเบอร์โทรศัพท์นี้ (ตรวจสอบการเชื่อมต่อ Database)</p>`;
         }
     }
 };

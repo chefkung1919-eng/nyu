@@ -48,7 +48,7 @@
                     <a href="#" onclick="app.navigate('home')" class="hover:text-brand-gold transition-colors" data-i18n="nav_home">หน้าแรก</a>
                     <a href="#" onclick="app.navigate('menu')" class="hover:text-brand-gold transition-colors" data-i18n="nav_menu">เมนู</a>
                     <a href="#" onclick="app.navigate('track')" class="hover:text-brand-gold transition-colors" data-i18n="nav_track">ติดตามออเดอร์</a>
-                    <a href="#" onclick="app.navigate('points')" class="hover:text-brand-gold transition-colors" data-i18n="nav_points">แต้มสะสม</a>
+                    <a href="#" onclick="app.navigate('rewards')" class="hover:text-brand-gold transition-colors" data-i18n="nav_rewards">Rewards</a>
                 </div>
 
                 <!-- Icons (Lang & Cart) -->
@@ -78,7 +78,7 @@
                 <a href="#" onclick="app.navigate('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_home">หน้าแรก</a>
                 <a href="#" onclick="app.navigate('menu'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_menu">เมนู</a>
                 <a href="#" onclick="app.navigate('track'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_track">ติดตามออเดอร์</a>
-                <a href="#" onclick="app.navigate('points'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_points">แต้มสะสม</a>
+                <a href="#" onclick="app.navigate('rewards'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_rewards">Rewards</a>
             </div>
         </div>
     </nav>
@@ -241,7 +241,8 @@
                 <div class="bg-brand-brown border border-brand-gold/10 p-6 rounded-sm shadow-xl text-right">
                     <p class="text-sm text-brand-cream/70 mb-2"><span data-i18n="subtotal">ยอดรวม:</span> <span id="summary-subtotal" class="font-medium text-lg">฿0</span></p>
                     <p id="summary-discount-row" class="text-sm text-red-400 mb-2 hidden"><span data-i18n="discount">ส่วนลด (แต้ม):</span> <span id="summary-discount" class="font-medium text-lg">-฿0</span></p>
-                    <div class="text-2xl font-serif text-brand-gold mb-6 mt-4 border-t border-brand-gold/20 pt-4"><span data-i18n="total_amount_pay">ยอดสุทธิ:</span> <span id="summary-total">฿0</span></div>
+                    <div class="text-2xl font-serif text-brand-gold mb-2 mt-4 border-t border-brand-gold/20 pt-4"><span data-i18n="total_amount_pay">ยอดสุทธิ:</span> <span id="summary-total">฿0</span></div>
+                    <p class="text-xs text-brand-gold/70 mb-6 italic"><span data-i18n="checkout_earn_msg">คุณจะได้รับ</span> <span id="summary-earn-points" class="font-bold">0</span> <span data-i18n="points_from_order">แต้มจากออเดอร์นี้</span></p>
                     
                     <button type="submit" id="submit-order-btn" class="bg-brand-gold text-brand-dark px-10 py-4 rounded-sm font-bold text-lg hover:bg-brand-goldHover transition-colors w-full md:w-auto" data-i18n="btn_confirm_order">ยืนยันคำสั่งซื้อ</button>
                 </div>
@@ -263,14 +264,19 @@
             </div>
         </div>
 
-        <!-- POINTS VIEW (MY POINTS) -->
-        <div id="view-points" class="page-view py-16 px-4 max-w-3xl mx-auto">
-            <h1 class="text-4xl font-serif text-brand-gold mb-6 text-center" data-i18n="nav_points">แต้มสะสม</h1>
-            <p class="text-brand-cream/70 mb-10 text-center" data-i18n="points_subtitle">กรอกเบอร์โทรศัพท์ของคุณเพื่อตรวจสอบแต้มสะสมและประวัติ</p>
+        <!-- REWARDS VIEW -->
+        <div id="view-rewards" class="page-view py-16 px-4 max-w-3xl mx-auto">
+            <div class="text-center mb-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-brand-gold mb-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                </svg>
+                <h1 class="text-4xl font-serif text-brand-gold mb-4" data-i18n="nav_rewards">Rewards</h1>
+                <p class="text-brand-cream/70" data-i18n="points_subtitle">กรอกเบอร์โทรศัพท์ของคุณเพื่อตรวจสอบแต้มสะสมและของรางวัล</p>
+            </div>
             
             <div class="flex max-w-md mx-auto mb-12">
                 <input type="tel" id="points-phone" placeholder="เบอร์โทรศัพท์" class="flex-grow bg-brand-brown border border-brand-gold/20 text-brand-cream px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors">
-                <button onclick="app.checkMyPoints()" class="bg-brand-gold text-brand-dark px-6 py-3 font-semibold hover:bg-brand-goldHover transition-colors" data-i18n="btn_check_points">ตรวจสอบ</button>
+                <button onclick="app.checkMyRewards()" class="bg-brand-gold text-brand-dark px-6 py-3 font-semibold hover:bg-brand-goldHover transition-colors" data-i18n="btn_check_points">ตรวจสอบ</button>
             </div>
 
             <div id="points-result" class="hidden bg-brand-brown border border-brand-gold/20 p-8 rounded-sm fade-in">
