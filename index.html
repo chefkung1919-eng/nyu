@@ -48,7 +48,7 @@
                     <a href="#" onclick="app.navigate('home')" class="hover:text-brand-gold transition-colors" data-i18n="nav_home">หน้าแรก</a>
                     <a href="#" onclick="app.navigate('menu')" class="hover:text-brand-gold transition-colors" data-i18n="nav_menu">เมนู</a>
                     <a href="#" onclick="app.navigate('track')" class="hover:text-brand-gold transition-colors" data-i18n="nav_track">ติดตามออเดอร์</a>
-                    <a href="#" onclick="app.navigate('about')" class="hover:text-brand-gold transition-colors" data-i18n="nav_about">เกี่ยวกับเรา</a>
+                    <a href="#" onclick="app.navigate('points')" class="hover:text-brand-gold transition-colors" data-i18n="nav_points">แต้มสะสม</a>
                 </div>
 
                 <!-- Icons (Lang & Cart) -->
@@ -78,7 +78,7 @@
                 <a href="#" onclick="app.navigate('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_home">หน้าแรก</a>
                 <a href="#" onclick="app.navigate('menu'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_menu">เมนู</a>
                 <a href="#" onclick="app.navigate('track'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_track">ติดตามออเดอร์</a>
-                <a href="#" onclick="app.navigate('about'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_about">เกี่ยวกับเรา</a>
+                <a href="#" onclick="app.navigate('points'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_points">แต้มสะสม</a>
             </div>
         </div>
     </nav>
@@ -185,8 +185,21 @@
                         </div>
                         <div>
                             <label class="block text-sm text-brand-cream/70 mb-2" data-i18n="checkout_phone">เบอร์โทรศัพท์ *</label>
-                            <input type="tel" id="checkout-phone" required class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors">
+                            <!-- Input with keyup to fetch points -->
+                            <input type="tel" id="checkout-phone" required onkeyup="app.debounceCheckPoints()" class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors">
                         </div>
+                    </div>
+                    
+                    <!-- Loyalty Points Display -->
+                    <div id="loyalty-box" class="mt-6 p-4 border border-brand-gold/30 bg-brand-dark rounded-sm hidden">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-brand-gold font-serif" data-i18n="your_points">แต้มสะสมของคุณ:</span>
+                            <span id="checkout-current-points" class="font-bold text-xl text-brand-cream">0</span>
+                        </div>
+                        <label id="discount-label" class="flex items-center space-x-3 cursor-pointer opacity-50">
+                            <input type="checkbox" id="use-points-checkbox" onchange="app.toggleDiscount()" disabled class="text-brand-gold focus:ring-brand-gold">
+                            <span data-i18n="use_points_discount">ใช้ 100 แต้ม แลกส่วนลด 50 บาท</span>
+                        </label>
                     </div>
                 </div>
 
@@ -224,7 +237,12 @@
                     </div>
                 </div>
 
-                <div class="text-right">
+                <!-- Order Summary -->
+                <div class="bg-brand-brown border border-brand-gold/10 p-6 rounded-sm shadow-xl text-right">
+                    <p class="text-sm text-brand-cream/70 mb-2"><span data-i18n="subtotal">ยอดรวม:</span> <span id="summary-subtotal" class="font-medium text-lg">฿0</span></p>
+                    <p id="summary-discount-row" class="text-sm text-red-400 mb-2 hidden"><span data-i18n="discount">ส่วนลด (แต้ม):</span> <span id="summary-discount" class="font-medium text-lg">-฿0</span></p>
+                    <div class="text-2xl font-serif text-brand-gold mb-6 mt-4 border-t border-brand-gold/20 pt-4"><span data-i18n="total_amount_pay">ยอดสุทธิ:</span> <span id="summary-total">฿0</span></div>
+                    
                     <button type="submit" id="submit-order-btn" class="bg-brand-gold text-brand-dark px-10 py-4 rounded-sm font-bold text-lg hover:bg-brand-goldHover transition-colors w-full md:w-auto" data-i18n="btn_confirm_order">ยืนยันคำสั่งซื้อ</button>
                 </div>
             </form>
@@ -245,8 +263,24 @@
             </div>
         </div>
 
+        <!-- POINTS VIEW (MY POINTS) -->
+        <div id="view-points" class="page-view py-16 px-4 max-w-3xl mx-auto">
+            <h1 class="text-4xl font-serif text-brand-gold mb-6 text-center" data-i18n="nav_points">แต้มสะสม</h1>
+            <p class="text-brand-cream/70 mb-10 text-center" data-i18n="points_subtitle">กรอกเบอร์โทรศัพท์ของคุณเพื่อตรวจสอบแต้มสะสมและประวัติ</p>
+            
+            <div class="flex max-w-md mx-auto mb-12">
+                <input type="tel" id="points-phone" placeholder="เบอร์โทรศัพท์" class="flex-grow bg-brand-brown border border-brand-gold/20 text-brand-cream px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors">
+                <button onclick="app.checkMyPoints()" class="bg-brand-gold text-brand-dark px-6 py-3 font-semibold hover:bg-brand-goldHover transition-colors" data-i18n="btn_check_points">ตรวจสอบ</button>
+            </div>
+
+            <div id="points-result" class="hidden bg-brand-brown border border-brand-gold/20 p-8 rounded-sm fade-in">
+                <!-- Points info injected via JS -->
+            </div>
+        </div>
+
         <!-- ABOUT VIEW -->
         <div id="view-about" class="page-view py-16 px-4 max-w-4xl mx-auto text-center">
+            <!-- (Content remains the same as before) -->
             <h1 class="text-4xl font-serif text-brand-gold mb-10" data-i18n="nav_about">เกี่ยวกับเรา</h1>
             <div class="bg-brand-brown border border-brand-gold/10 p-10 rounded-sm">
                 <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1200" alt="Cafe Interior" class="w-full h-64 object-cover mb-8 rounded-sm opacity-80">
