@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Coffee | Luxury Coffee Experience</title>
+    <meta name="description" content="Experience premium coffee with Lumière. Order online for pickup or delivery.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1C1410',
+                            brown: '#2B1D14',
+                            gold: '#C9A876',
+                            cream: '#F5EFE6',
+                            goldHover: '#b89461'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-brand-dark text-brand-cream min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50 border-b border-brand-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer flex items-center" onclick="app.navigate('home')">
+                    <span class="font-serif text-2xl tracking-wider text-brand-gold">Lumière</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" onclick="app.navigate('home')" class="hover:text-brand-gold transition-colors" data-i18n="nav_home">หน้าแรก</a>
+                    <a href="#" onclick="app.navigate('menu')" class="hover:text-brand-gold transition-colors" data-i18n="nav_menu">เมนู</a>
+                    <a href="#" onclick="app.navigate('track')" class="hover:text-brand-gold transition-colors" data-i18n="nav_track">ติดตามออเดอร์</a>
+                    <a href="#" onclick="app.navigate('about')" class="hover:text-brand-gold transition-colors" data-i18n="nav_about">เกี่ยวกับเรา</a>
+                </div>
+
+                <!-- Icons (Lang & Cart) -->
+                <div class="flex items-center space-x-6">
+                    <button onclick="app.toggleLanguage()" class="text-sm font-medium hover:text-brand-gold transition-colors" id="lang-toggle">
+                        EN
+                    </button>
+                    <button onclick="app.navigate('cart')" class="relative hover:text-brand-gold transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-brand-gold text-brand-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center opacity-0 transition-opacity">0</span>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden hover:text-brand-gold" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-brown border-b border-brand-gold/20">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" onclick="app.navigate('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_home">หน้าแรก</a>
+                <a href="#" onclick="app.navigate('menu'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_menu">เมนู</a>
+                <a href="#" onclick="app.navigate('track'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_track">ติดตามออเดอร์</a>
+                <a href="#" onclick="app.navigate('about'); document.getElementById('mobile-menu').classList.add('hidden')" class="block px-3 py-2 text-base hover:text-brand-gold" data-i18n="nav_about">เกี่ยวกับเรา</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- HOME VIEW -->
+        <div id="view-home" class="page-view active">
+            <!-- Hero Section -->
+            <section class="relative h-[70vh] flex items-center justify-center text-center">
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=2000" alt="Coffee pouring" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-brand-dark"></div>
+                </div>
+                <div class="relative z-10 px-4 max-w-3xl mx-auto fade-in">
+                    <h1 class="text-5xl md:text-7xl font-serif text-brand-gold mb-6" data-i18n="hero_title">ศิลปะแห่งกาแฟ</h1>
+                    <p class="text-lg md:text-xl text-brand-cream/90 mb-10" data-i18n="hero_subtitle">สัมผัสรสชาติความพรีเมียมในทุกหยด คัดสรรจากเมล็ดพันธุ์ที่ดีที่สุด สู่มือคุณ</p>
+                    <button onclick="app.navigate('menu')" class="bg-brand-gold text-brand-dark px-8 py-4 rounded-sm font-semibold tracking-wide hover:bg-brand-goldHover transition-colors uppercase" data-i18n="btn_order_now">สั่งเลย</button>
+                </div>
+            </section>
+            
+            <!-- Featured Menu Section -->
+            <section class="py-20 px-4 max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-serif text-brand-gold mb-4" data-i18n="featured_title">เมนูแนะนำ</h2>
+                    <div class="w-24 h-[1px] bg-brand-gold/50 mx-auto"></div>
+                </div>
+                <div id="featured-menu-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Featured items will be injected here -->
+                    <div class="col-span-3 text-center py-10"><div class="spinner mx-auto"></div></div>
+                </div>
+                <div class="text-center mt-12">
+                    <button onclick="app.navigate('menu')" class="border border-brand-gold text-brand-gold px-8 py-3 hover:bg-brand-gold hover:text-brand-dark transition-colors" data-i18n="btn_view_all_menu">ดูเมนูทั้งหมด</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- MENU VIEW -->
+        <div id="view-menu" class="page-view py-16 px-4 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-serif text-brand-gold mb-4" data-i18n="menu_title">เมนูของเรา</h1>
+                <div class="w-24 h-[1px] bg-brand-gold/50 mx-auto"></div>
+            </div>
+            
+            <!-- Categories Filter -->
+            <div id="categories-filter" class="flex flex-wrap justify-center gap-4 mb-12">
+                <!-- Categories will be injected here -->
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Menu items will be injected here -->
+                <div class="col-span-full text-center py-20"><div class="spinner mx-auto"></div></div>
+            </div>
+        </div>
+
+        <!-- PRODUCT MODAL (Hidden by default) -->
+        <div id="product-modal" class="fixed inset-0 z-50 hidden bg-brand-dark/95 backdrop-blur-sm overflow-y-auto">
+            <div class="min-h-screen px-4 text-center flex items-center justify-center">
+                <div class="relative bg-brand-brown w-full max-w-2xl text-left shadow-2xl border border-brand-gold/20 fade-in rounded-sm p-6 md:p-10 my-8">
+                    <button onclick="app.closeProductModal()" class="absolute top-4 right-4 text-brand-cream/50 hover:text-brand-gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div id="modal-content">
+                        <!-- Modal content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CART VIEW -->
+        <div id="view-cart" class="page-view py-16 px-4 max-w-4xl mx-auto">
+            <h1 class="text-4xl font-serif text-brand-gold mb-10 border-b border-brand-gold/20 pb-4" data-i18n="cart_title">ตะกร้าสินค้า</h1>
+            
+            <div id="cart-content" class="bg-brand-brown border border-brand-gold/10 p-6 rounded-sm shadow-xl">
+                <!-- Cart items will be injected here -->
+                <div class="text-center py-10 text-brand-cream/50" data-i18n="cart_empty">ตะกร้าของคุณยังว่างเปล่า</div>
+            </div>
+            
+            <div id="cart-summary" class="mt-8 hidden flex justify-between items-center bg-brand-brown border border-brand-gold/10 p-6 rounded-sm">
+                <div>
+                    <p class="text-sm text-brand-cream/70" data-i18n="total_amount">ราคารวม</p>
+                    <p class="text-3xl font-serif text-brand-gold" id="cart-total-price">฿0</p>
+                </div>
+                <button onclick="app.navigate('checkout')" class="bg-brand-gold text-brand-dark px-8 py-3 rounded-sm font-semibold hover:bg-brand-goldHover transition-colors" data-i18n="btn_checkout">ดำเนินการสั่งซื้อ</button>
+            </div>
+        </div>
+
+        <!-- CHECKOUT VIEW -->
+        <div id="view-checkout" class="page-view py-16 px-4 max-w-3xl mx-auto">
+            <h1 class="text-4xl font-serif text-brand-gold mb-10 border-b border-brand-gold/20 pb-4" data-i18n="checkout_title">ชำระเงิน / ยืนยันการสั่งซื้อ</h1>
+            
+            <form id="checkout-form" class="space-y-8" onsubmit="event.preventDefault(); app.submitOrder();">
+                <!-- Customer Info -->
+                <div class="bg-brand-brown border border-brand-gold/10 p-6 rounded-sm shadow-xl">
+                    <h2 class="text-xl font-serif text-brand-gold mb-6" data-i18n="checkout_info">ข้อมูลติดต่อ</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-brand-cream/70 mb-2" data-i18n="checkout_name">ชื่อ-นามสกุล *</label>
+                            <input type="text" id="checkout-name" required class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-brand-cream/70 mb-2" data-i18n="checkout_phone">เบอร์โทรศัพท์ *</label>
+                            <input type="tel" id="checkout-phone" required class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fulfillment -->
+                <div class="bg-brand-brown border border-brand-gold/10 p-6 rounded-sm shadow-xl">
+                    <h2 class="text-xl font-serif text-brand-gold mb-6" data-i18n="checkout_method">รูปแบบการรับสินค้า</h2>
+                    <div class="flex space-x-6 mb-6">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="fulfillment" value="pickup" checked onchange="app.toggleFulfillment()" class="text-brand-gold focus:ring-brand-gold">
+                            <span data-i18n="checkout_pickup">รับเองที่ร้าน</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="fulfillment" value="delivery" onchange="app.toggleFulfillment()" class="text-brand-gold focus:ring-brand-gold">
+                            <span data-i18n="checkout_delivery">จัดส่งเดลิเวอรี่</span>
+                        </label>
+                    </div>
+
+                    <div id="pickup-options" class="block">
+                        <label class="block text-sm text-brand-cream/70 mb-2" data-i18n="checkout_pickup_time">เวลารับสินค้า (โดยประมาณ)</label>
+                        <select id="checkout-pickup-time" class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors">
+                            <option value="asap" data-i18n="time_asap">เร็วที่สุด (15-20 นาที)</option>
+                            <option value="30m">อีก 30 นาที</option>
+                            <option value="1h">อีก 1 ชั่วโมง</option>
+                        </select>
+                    </div>
+
+                    <div id="delivery-options" class="hidden">
+                        <label class="block text-sm text-brand-cream/70 mb-2" data-i18n="checkout_address">ที่อยู่จัดส่ง *</label>
+                        <textarea id="checkout-address" rows="3" class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors"></textarea>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <label class="block text-sm text-brand-cream/70 mb-2" data-i18n="checkout_note">หมายเหตุเพิ่มเติม</label>
+                        <input type="text" id="checkout-note" class="w-full bg-brand-dark border border-brand-gold/20 text-brand-cream px-4 py-2 focus:outline-none focus:border-brand-gold transition-colors">
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" id="submit-order-btn" class="bg-brand-gold text-brand-dark px-10 py-4 rounded-sm font-bold text-lg hover:bg-brand-goldHover transition-colors w-full md:w-auto" data-i18n="btn_confirm_order">ยืนยันคำสั่งซื้อ</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- TRACK VIEW -->
+        <div id="view-track" class="page-view py-16 px-4 max-w-2xl mx-auto text-center">
+            <h1 class="text-4xl font-serif text-brand-gold mb-6" data-i18n="track_title">ติดตามออเดอร์</h1>
+            <p class="text-brand-cream/70 mb-10" data-i18n="track_subtitle">กรอกหมายเลขออเดอร์ของคุณเพื่อตรวจสอบสถานะ</p>
+            
+            <div class="flex max-w-md mx-auto mb-12">
+                <input type="text" id="track-order-number" placeholder="เช่น ORD-1234" class="flex-grow bg-brand-brown border border-brand-gold/20 text-brand-cream px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors">
+                <button onclick="app.trackOrder()" class="bg-brand-gold text-brand-dark px-6 py-3 font-semibold hover:bg-brand-goldHover transition-colors" data-i18n="btn_track">ค้นหา</button>
+            </div>
+
+            <div id="track-result" class="hidden bg-brand-brown border border-brand-gold/20 p-8 rounded-sm fade-in text-left">
+                <!-- Status injected via JS -->
+            </div>
+        </div>
+
+        <!-- ABOUT VIEW -->
+        <div id="view-about" class="page-view py-16 px-4 max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl font-serif text-brand-gold mb-10" data-i18n="nav_about">เกี่ยวกับเรา</h1>
+            <div class="bg-brand-brown border border-brand-gold/10 p-10 rounded-sm">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1200" alt="Cafe Interior" class="w-full h-64 object-cover mb-8 rounded-sm opacity-80">
+                <p class="text-lg leading-relaxed text-brand-cream/90 mb-6">
+                    Lumière Coffee เริ่มต้นจากความหลงใหลในศิลปะการคัดสรรและคั่วเมล็ดกาแฟ เราเชื่อว่ากาแฟทุกแก้วคือผลงานศิลปะที่ต้องพิถีพิถันตั้งแต่ต้นน้ำจนถึงปลายน้ำ
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 text-left">
+                    <div>
+                        <h3 class="text-brand-gold font-serif text-xl mb-3">ที่ตั้งร้าน</h3>
+                        <p class="text-brand-cream/70">123 ถนนสุขุมวิท<br>คลองเตย, กรุงเทพมหานคร 10110</p>
+                    </div>
+                    <div>
+                        <h3 class="text-brand-gold font-serif text-xl mb-3">เวลาเปิดทำการ</h3>
+                        <p class="text-brand-cream/70">จันทร์ - ศุกร์: 07:00 - 18:00<br>เสาร์ - อาทิตย์: 08:00 - 19:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-brown border-t border-brand-gold/10 mt-20 py-10 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="font-serif text-2xl text-brand-gold mb-4">Lumière</h2>
+            <p class="text-brand-cream/50 text-sm mb-6">© 2026 Lumière Coffee. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 text-brand-gold">
+                <a href="#" class="hover:text-brand-cream transition-colors">Instagram</a>
+                <a href="#" class="hover:text-brand-cream transition-colors">Facebook</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
