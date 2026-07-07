@@ -2517,37 +2517,26 @@
     });
     </script>
 </body>
-    const fs = require('fs');
-const path = require('path');
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cafe</title>
+    
+    <!-- วางโค้ด Google Analytics ตรงนี้ -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XZCMCG9XS5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-const logFile = 'C:\\Users\\DTB01\\.gemini\\antigravity\\brain\\bb9e6ad6-5f76-4229-af4f-f7fbe4ca852a\\.system_generated\\logs\\transcript_full.jsonl';
-const outFile = 'C:\\Users\\DTB01\\.gemini\\antigravity\\brain\\bb9e6ad6-5f76-4229-af4f-f7fbe4ca852a\\scratch\\lumiere.html';
-
-try {
-    const lines = fs.readFileSync(logFile, 'utf8').split('\n');
-    for (const line of lines) {
-        if (!line.trim()) continue;
-        const obj = JSON.parse(line);
-        if (obj.source === 'USER_EXPLICIT' && obj.type === 'USER_INPUT') {
-            let content = obj.content;
-            // Extract HTML content after "แก้ให้ติดแท็ก\r\n Analyticsได้ให้หน่อย " or "<USER_REQUEST>\nแก้ให้ติดแท็ก\n Analyticsได้ให้หน่อย "
-            const prefixIndex = content.indexOf('<!DOCTYPE html>');
-            if (prefixIndex !== -1) {
-                let html = content.substring(prefixIndex);
-                // Remove trailing tags or anything after </html> if any
-                const htmlEndIndex = html.lastIndexOf('</html>');
-                if (htmlEndIndex !== -1) {
-                    html = html.substring(0, htmlEndIndex + 7);
-                }
-                // Save it
-                fs.writeFileSync(outFile, html, 'utf8');
-                console.log('Successfully extracted HTML of length:', html.length);
-                process.exit(0);
-            }
-        }
-    }
-    console.error('HTML content not found in log.');
-} catch (err) {
-    console.error('Error:', err);
-}
+      gtag('config', 'G-XZCMCG9XS5');
+    </script>
+    
+</head>
+<body>
+    ...
+</body>
+</html>
 </html>
